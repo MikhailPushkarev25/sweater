@@ -1,7 +1,7 @@
 <#import "parts/common.ftlh" as c>
 <@c.page>
     List of users
-    <table>
+    <table class="table table-dark table-striped">
         <thead>
         <tr>Name</tr>
         <th>Role</th>
