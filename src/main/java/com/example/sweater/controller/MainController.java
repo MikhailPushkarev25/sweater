@@ -23,8 +23,12 @@ import java.util.UUID;
 @Controller
 public class MainController {
 
-    @Autowired
     private MessageRepository repository;
+
+    @Autowired
+    public MainController(MessageRepository repository) {
+        this.repository = repository;
+    }
 
     @Value("${upload.path}")
     private String uploadPath;
