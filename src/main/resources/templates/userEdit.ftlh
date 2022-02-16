@@ -1,6 +1,6 @@
 <#import "parts/common.ftlh" as c>
 <@c.page>
-    User Editor
+    Пользовательский редактор
     <form action="/user" method="post">
         <input type="text" name="username" value="${user.username}">
         <#list roles as role>
@@ -10,6 +10,6 @@
         </#list>
         <input type="hidden" value="${user.id}" name="userId">
         <input type="hidden" value="${_csrf.token}" name="_csrf">
-        <button type="submit">Save</button>
+        <button type="submit">Сохранить</button>
     </form>
 </@c.page>

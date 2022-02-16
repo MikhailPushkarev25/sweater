@@ -5,13 +5,13 @@
       <div class="form-group col-md-6">
          <form method="get" action="/main" class="form-inline">
             <input type="text" name="filter" class="form-control" value="${filter!}" placeholder="Search by tag" />
-            <button type="submit" class="btn btn-primary ml-2">Search</button>
+            <button type="submit" class="btn btn-primary ml-2">Поиск</button>
          </form>
       </div>
    </div>
 
    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-      Add new Message
+      Добавить новое сообщение
    </a>
 
    <div class="collapse <#if message??>show</#if>" id="collapseExample">
@@ -38,7 +38,7 @@
             <div class="form-group">
                <div class="custom-file">
                   <input type="file" name="file" id="customFile">
-                  <label class="custom-file-label" for="customFile">Choose file</label>
+                  <label class="custom-file-label" for="customFile">Выберите файл</label>
                </div>
             </div>
             <input type="hidden" name="_csrf" value="${_csrf.token}" />
@@ -65,7 +65,7 @@
             </div>
          </div>
       <#else>
-         No message
+         Нет сообщений
       </#list>
    </div>
 </@c.page>
