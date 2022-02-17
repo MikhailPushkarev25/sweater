@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 @Controller
@@ -71,7 +72,7 @@ public class MainController {
             model.addAttribute("message", message);
         } else {
 
-            if (file != null && !file.getOriginalFilename().isEmpty()) {
+            if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty()) {
                 File uploadDir = new File(uploadPath);
                 if (!uploadDir.exists()) {
                     uploadDir.mkdir();
