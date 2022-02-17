@@ -31,7 +31,7 @@ public class MainController {
         this.repository = repository;
     }
 
-    @Value("${upload.path}")
+    @Value("${/C:/projects/com.example/sweater}")
     private String uploadPath;
 
     @GetMapping("/")
