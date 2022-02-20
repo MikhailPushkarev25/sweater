@@ -72,17 +72,7 @@ public class MainController {
             model.addAttribute("message", message);
         } else {
 
-            if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty()) {
-                File uploadDir = new File(uploadPath);
-                if (!uploadDir.exists()) {
-                    uploadDir.mkdir();
-                }
-
-                String uuidFile = UUID.randomUUID().toString();
-                String resultFileName = uuidFile + "." + file.getOriginalFilename();
-                message.setFilename(resultFileName);
-                file.transferTo(new File(uploadPath + "/" + resultFileName));
-            }
+            saveFile(message, file);
             model.addAttribute("message", null);
 
             repository.save(message);
@@ -92,5 +82,19 @@ public class MainController {
 
         model.addAttribute("messages", messages);
         return "main";
+    }
+
+     private void saveFile(Message message, MultipartFile file) throws IOException {
+        if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty()) {
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFileName = uuidFile + "." + file.getOriginalFilename();
+            message.setFilename(resultFileName);
+            file.transferTo(new File(uploadPath + "/" + resultFileName));
+        }
     }
 }
