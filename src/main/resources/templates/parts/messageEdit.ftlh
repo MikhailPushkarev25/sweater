@@ -17,7 +17,7 @@
             </div>
             <div class="form-group">
                 <input type="text" name="tag" class="form-control"
-                       value="<#if message??>${message.tag}</#if>" placeholder="Тэг">
+                       value="<#if message??>${message.tag}</#if>" placeholder="Тэг" />
                 <#if tagError??>
                     <div class="invalid-feedback">
                         ${tagError}
@@ -26,7 +26,7 @@
             </div>
             <div class="form-group">
                 <div class="custom-file">
-                    <input type="file" name="file" id="customFile">
+                    <input type="file" name="file" id="customFile" />
                     <label class="custom-file-label" for="customFile">Выберите файл</label>
                 </div>
             </div>
