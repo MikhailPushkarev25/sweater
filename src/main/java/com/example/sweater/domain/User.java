@@ -16,7 +16,7 @@ import java.util.Set;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @NotBlank(message = "Username cannot be empty!")
     private String username;
@@ -60,11 +60,11 @@ public class User implements UserDetails {
         return roles.contains(Role.ADMIN);
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

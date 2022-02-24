@@ -2,9 +2,15 @@ package com.example.sweater.controller;
 
 import com.example.sweater.domain.Message;
 import com.example.sweater.domain.User;
+import com.example.sweater.domain.dto.MessageDto;
 import com.example.sweater.repository.MessageRepository;
+import com.example.sweater.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,14 +21,16 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("/user-messages/{user}")
+@RequestMapping("/user-messages/{author}")
 public class MessageController {
 
     private MessageRepository repository;
+
+    @Autowired
+    private MessageService messageService;
 
     @Autowired
     public MessageController(MessageRepository repository) {
@@ -33,28 +41,31 @@ public class MessageController {
     private String uploadPath;
 
     @GetMapping()
-    public String userMessages(
+    public String userMessges(
             @AuthenticationPrincipal User currentUser,
-            @PathVariable User user,
+            @PathVariable User author,
             Model model,
-            @RequestParam(required = false) Message message
+            @RequestParam(required = false) Message message,
+            @PageableDefault(sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        Set<Message> messages = user.getMessages();
+        Page<MessageDto> page = messageService.messageListForUser(pageable, currentUser, author);
 
-        model.addAttribute("userChannel", user);
-        model.addAttribute("subscriptionsCount", user.getSubscriptions().size());
-        model.addAttribute("subscribersCount", user.getSubscribers().size());
-        model.addAttribute("isSubscriber", user.getSubscribers().contains(currentUser));
-        model.addAttribute("messages", messages);
+        model.addAttribute("userChannel", author);
+        model.addAttribute("subscriptionsCount", author.getSubscriptions().size());
+        model.addAttribute("subscribersCount", author.getSubscribers().size());
+        model.addAttribute("isSubscriber", author.getSubscribers().contains(currentUser));
+        model.addAttribute("page", page);
         model.addAttribute("message", message);
-        model.addAttribute("isCurrentUser", currentUser.equals(user));
+        model.addAttribute("isCurrentUser", currentUser.equals(author));
+        model.addAttribute("url", "/user-messages/" + author.getId());
+
         return "userMessages";
     }
 
     @PostMapping()
     public String updateMessage(
             @AuthenticationPrincipal User currentUser,
-            @PathVariable Integer user,
+            @PathVariable Integer author,
             @RequestParam("id") Message message,
             @RequestParam("text") String text,
             @RequestParam("tag") String tag,
@@ -82,6 +93,6 @@ public class MessageController {
 
             repository.save(message);
         }
-        return "redirect:/user-messages/" + user;
+        return "redirect:/user-messages/" + author;
     }
 }
