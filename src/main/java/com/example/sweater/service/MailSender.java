@@ -10,12 +10,8 @@ import org.springframework.stereotype.Service;
 public class MailSender {
 
 
-    private JavaMailSender mailSender;
-
     @Autowired
-    public MailSender(JavaMailSender mailSender) {
-        this.mailSender = mailSender;
-    }
+    private JavaMailSender mailSender;
 
     @Value("${spring.mail.username}")
     private String username;
