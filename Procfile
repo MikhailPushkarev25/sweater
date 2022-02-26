@@ -1,1 +1,0 @@
-web: java -jar target/sweater-1.0.jar --spring.config.location=heroku.properties
